@@ -23,6 +23,7 @@ export const ArtworkDetails = ({
         source={{
           uri: `https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`,
         }}
+        alt={artwork.thumbnail.alt_text}
       />
       <Text
         style={{ textAlign: "center", marginBottom: 8 }}

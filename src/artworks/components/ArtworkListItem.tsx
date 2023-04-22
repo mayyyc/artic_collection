@@ -13,6 +13,7 @@ export const ArtworkListItem = ({
 }: IArtworkListItemProps): React.ReactElement => {
   return (
     <List.Item
+      testID="artwork-list-item"
       left={(props) => (
         <List.Image
           {...props}
