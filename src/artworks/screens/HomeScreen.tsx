@@ -3,7 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import Counter from "../components/Counter";
 import { StackScreenProps } from "@react-navigation/stack";
-import { RootStackParamList } from "../../RootStack";
+import { RootStackParamList } from "../../../RootStack";
 
 type Props = StackScreenProps<RootStackParamList, "Home">;
 
