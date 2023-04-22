@@ -9,4 +9,7 @@ export interface IArtworkListItem {
   };
   date_display: string;
   artist_display: string;
+  place_of_origin: string;
+  dimensions: string;
+  artwork_type_title: string;
 }

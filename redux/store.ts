@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
+import artworksSlice from "./artworksSlice";
 import counterSlice from "./counterSlice";
 
 export const store = configureStore({
   reducer: {
+    artworks: artworksSlice,
     counter: counterSlice,
   },
 });
