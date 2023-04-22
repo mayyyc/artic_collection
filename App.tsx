@@ -1,4 +1,4 @@
-import { store } from "./src/redux/store";
+import { store } from "./redux/store";
 import { Provider } from "react-redux";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import RootStack from "./RootStack";
