@@ -1,17 +1,28 @@
-import { Button, Text } from "react-native";
+import { Button, FlatList, Text } from "react-native";
 import React from "react";
-import { decrement, increment } from "../../../redux/counterSlice";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { IArtworkListItem } from "../api/IArtworkListItem";
+import { List } from "react-native-paper";
+import { ArtworkListItem } from "./ArtworkListItem";
 
-export const ArtworkList = (): React.ReactElement => {
-  const value = useAppSelector((state) => state.counter.value);
-  const dispatch = useAppDispatch();
+interface IArtworkListProps {
+  artworks: IArtworkListItem[];
+  onPressArtwork: (artworkId: string) => void;
+}
 
+export const ArtworkList = ({
+  artworks,
+  onPressArtwork,
+}: IArtworkListProps): React.ReactElement => {
   return (
-    <>
-      <Text>{value}</Text>
-      <Button title="increment" onPress={() => dispatch(increment())} />
-      <Button title="decrement" onPress={() => dispatch(decrement())} />
-    </>
+    <FlatList
+      data={artworks}
+      renderItem={({ item }) => (
+        <ArtworkListItem
+          key={item.id}
+          artwork={item}
+          onPress={() => onPressArtwork(item.id)}
+        />
+      )}
+    />
   );
 };

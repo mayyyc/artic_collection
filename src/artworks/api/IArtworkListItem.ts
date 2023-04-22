@@ -12,4 +12,5 @@ export interface IArtworkListItem {
   place_of_origin: string;
   dimensions: string;
   artwork_type_title: string;
+  image_id: string;
 }

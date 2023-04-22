@@ -1,11 +1,4 @@
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { SafeAreaView, StatusBar, Text, View } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamList } from "../../../RootStack";
 import { useQuery } from "@tanstack/react-query";
@@ -14,6 +7,7 @@ import { useState } from "react";
 import { loadArtworks } from "../../../redux/artworksSlice";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { ActivityIndicator, useTheme } from "react-native-paper";
+import { ArtworkList } from "../components/ArtworkList";
 
 type Props = StackScreenProps<RootStackParamList, "Collection">;
 
@@ -61,18 +55,14 @@ export const CollectionScreen = ({ navigation }: Props) => {
           </Text>
         </View>
       )}
-      <ScrollView>
-        {artworks.map((each) => (
-          <Text
-            key={each.id}
-            onPress={() =>
-              navigation.navigate("Artwork", { artworkId: each.id })
-            }
-          >
-            {each.title}
-          </Text>
-        ))}
-      </ScrollView>
+      {!isLoading && !isError && artworks.length > 0 && (
+        <ArtworkList
+          artworks={artworks}
+          onPressArtwork={(artworkId) =>
+            navigation.navigate("Artwork", { artworkId })
+          }
+        />
+      )}
     </SafeAreaView>
   );
 };

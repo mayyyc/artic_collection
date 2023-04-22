@@ -6,7 +6,7 @@ export const getArtworks = async (
 ): Promise<IArtworkListItem[]> => {
   try {
     const { data } = await axios.get<AxiosResponse<IArtworkListItem[]>>(
-      `https://api.artic.edu/api/v1/artworks?limit=10&page=${page}&fields=id,title,thumbnail,date_display,artist_display,place_of_origin,dimensions,artwork_type_title`
+      `https://api.artic.edu/api/v1/artworks?limit=10&page=${page}&fields=id,title,thumbnail,date_display,artist_display,place_of_origin,dimensions,artwork_type_title,image_id`
     );
     return data.data;
   } catch (error) {
