@@ -4,7 +4,7 @@ import { RootStackParamList } from "../../../RootStack";
 import { useQuery } from "@tanstack/react-query";
 import { getArtworks } from "../api/getArtworks";
 import { useState } from "react";
-import { loadArtworks } from "../../../redux/artworksSlice";
+import { clearArtworks, loadArtworks } from "../../../redux/artworksSlice";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { ActivityIndicator, useTheme } from "react-native-paper";
 import { ArtworkList } from "../components/ArtworkList";
@@ -16,13 +16,20 @@ export const CollectionScreen = ({ navigation }: Props) => {
   const artworks = useAppSelector((state) => state.artworks.value);
   const dispatch = useAppDispatch();
   const [page, setPage] = useState(1);
-  const { isLoading, isError } = useQuery({
-    queryKey: ["getArtworks"],
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const { isLoading, isError, refetch, isFetching } = useQuery({
+    queryKey: ["getArtworks", page],
     queryFn: () => getArtworks(page),
     onSuccess: (data) => {
       dispatch(loadArtworks(data));
+      setIsLoadingMore(false);
     },
   });
+  const loadMoreResults = async () => {
+    if (isLoadingMore) return;
+    setIsLoadingMore(true);
+    setPage((page) => page + 1);
+  };
 
   return (
     <SafeAreaView
@@ -31,7 +38,7 @@ export const CollectionScreen = ({ navigation }: Props) => {
         paddingTop: StatusBar.currentHeight,
       }}
     >
-      {isLoading && (
+      {(isLoading || isFetching) && artworks.length === 0 && (
         <View
           style={{
             flex: 1,
@@ -55,12 +62,22 @@ export const CollectionScreen = ({ navigation }: Props) => {
           </Text>
         </View>
       )}
-      {!isLoading && !isError && artworks.length > 0 && (
+      {!isError && artworks.length > 0 && (
         <ArtworkList
           artworks={artworks}
           onPressArtwork={(artworkId) =>
             navigation.navigate("Artwork", { artworkId })
           }
+          onRefresh={() => {
+            setPage(1);
+            dispatch(clearArtworks());
+            refetch();
+          }}
+          refreshing={isFetching}
+          onLoadMore={() => {
+            loadMoreResults();
+          }}
+          isLoadingMore={isLoadingMore}
         />
       )}
     </SafeAreaView>

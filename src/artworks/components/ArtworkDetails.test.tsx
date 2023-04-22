@@ -14,12 +14,16 @@ const monet = artworkListItemFactory.build({
 });
 
 describe("ArtworkDetails", () => {
-  it("should render artwork details", () => {
+  it("should show artwork details", () => {
     render(<ArtworkDetails artwork={monet} />);
     expect(screen.getByText("The Water Lily Pond")).toBeTruthy();
     expect(screen.getByText("Claude Monet")).toBeTruthy();
     expect(screen.getByText("1899 - France")).toBeTruthy();
     expect(screen.getByText("Type: Oil Paint")).toBeTruthy();
     expect(screen.getByText("Dimensions: 93 cm x 74 cm")).toBeTruthy();
+  });
+  it("should shoe artwork not found", () => {
+    render(<ArtworkDetails artwork={undefined} />);
+    expect(screen.getByText("Artwork not found :(")).toBeTruthy();
   });
 });

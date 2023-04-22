@@ -28,4 +28,15 @@ describe("ArtworkList", () => {
     fireEvent.press(screen.getByText("The Water Lily Pond"));
     expect(onPressArtwork).toBeCalledWith("monet");
   });
+  it("should show loading more text", () => {
+    const onPressArtwork = jest.fn();
+    render(
+      <ArtworkList
+        artworks={[...artworks]}
+        isLoadingMore={true}
+        onPressArtwork={onPressArtwork}
+      />
+    );
+    expect(screen.getByText("Loading More...")).toBeTruthy();
+  });
 });
